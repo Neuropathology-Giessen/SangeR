@@ -2,11 +2,16 @@
 
 Welcome to the git repository of the `SangeR`, the program that makes sanger sequencing analysis high-throughput.
 
+It provides you different ways to use it.
+
+1. You can use the R package to use it your own way.
+
+2. For high-troughput you can use the Nextflow script which utilizes the docker container.
 
 
 ## Required Software
 
-  - [Nextflow]() (19.10 or newer)
+  - [Nextflow](https://www.nextflow.io) (19.10 or newer)
 
 ## Required R Packages
 
@@ -24,7 +29,11 @@ curl -L -o .zip
 ```
 
 ## Docker
-We also provide `SangeR` as [DOCKER image](). We tested the image on Ubuntu and MacOS. 
+We also provide `SangeR` as [DOCKER image](https://hub.docker.com/r/kaischmid/sange_r). We tested the image on Ubuntu and MacOS. 
+
+'''
+docker pull kaischmid/sange_r
+'''
 
 
 ## Usage
