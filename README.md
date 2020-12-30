@@ -6,7 +6,7 @@ Welcome to the git repository of the `SangeR`, the program that makes sanger seq
 
 ## Required Software
 
-  - [R]() (version)
+  - [Nextflow]() (19.10 or newer)
 
 ## Required R Packages
 
