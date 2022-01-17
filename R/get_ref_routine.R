@@ -33,7 +33,7 @@ get_ref_routine <- function(SangeR, mart = "default"){
   SangeR$ref_amino <- mart$ref_amino
 
   #reference position
-  SangeR$ref_pos <- SangeR$ref_pos
+  SangeR$ref_pos <- mart$ref_pos
 
   #pepitde informations
   SangeR$pep_info <- mart$pep_info

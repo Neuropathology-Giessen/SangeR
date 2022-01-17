@@ -1,0 +1,117 @@
+---
+title: "Introduction to SangeR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SangeR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+This vignette describes the function and use of the `sangeR` package 
+
+![](../vignettes/sangeR_logo.PNG)
+
+# Abstract
+In the era of Next Generation Sequencing and beyond, the Sanger technique is still widely used for variant verification of inconclusive or ambiguous high-throughput sequencing results or as a low-cost molecular genetical analysis tool for single targets in many fields of study. Many analysis steps need time-consuming manual intervention. Therefore, we present here a pipeline-capable high-throughput solution with an optional Shiny web interface, that provides a binary mutation decision of hotspots together with plotted chromatograms including annotations via flat files based on R and Nextflow.
+
+## Availability
+
+All components of the PARrOT R package and the belonging Python scripts are available for download from the Github repository [PARrOT](https://github.molgen.mpg.de/loosolab/PARrOT/).
+
+### Installation
+
+To install the R-package the following commands have to be executed in R.
+
+```r
+install.packages(c("BiocManager","stringr","ggplot2","reshape2","seqinr","devtools")
+BiocManager::install(c("Biostrings","CrispRVariants","biomaRt","sangerseqR"))
+library("devtools")
+install_github("https://github.com/kaischmid/SangeR")
+```
+
+Get the Docker container [here](https://hub.docker.com/repository/docker/kaischmid/sange_r).
+
+Please make sure to check our other projects at [Giessen Institute of Neuropathology](https://github.com/Neuropathology-Giessen).
+
+## Usage
+
+### Input data
+
+The pipeline needs the following files as input.
+We divided the pipeline into an online and an offline mode.
+
+#### Online
+The pipeline gathers the necessary reference data on demand from online resources, but needs a stable internet connection.
+
+- In this case you only have to provied the ab1 file which is supposed to be analyzed
+
+- optional you can provide a POI (Point Of Interest) file to investigate every given file for mutations at your desired positions.
+- The format of this file shall be a .csv file containing the positions like follows:
+- "Points of interest"
+- "1" "5:1295228"
+- "2" "5:1295250"
+- "`<count>`" "`<chromsome>`":"`<position on chromosome>`" 
+
+
+#### Offline
+The pipeline needs a prepared local reference database for the offline use.
+
+- In this case you have to provied the ab1 file which is supposed to be analyzed
+
+- Additional you have to provide the needed mart ressources for the genes you want to analyze
+
+- optional you can provide a POI (Point Of Interest) file to investigate every given file for mutations at your desired positions.
+- The format of this file shall be a .csv file containing the positions like follows:
+- "Points of interest"
+- "1" "5:1295228"
+- "2" "5:1295250"
+- "`<count>`" "`<chromsome>`":"`<position on chromosome>`" 
+
+### PARAMETERS
+
+The following parameters can be set:
+
+  - filename: location of a ab1 file.
+  - delimiter: delimiter in genename/ID of ab1 file
+  - ID_pos: position of ID in genename/ID of ab1 file
+  - genename_pos: position of genename in genename/ID of ab1 file
+  - cutoff: cutoff for Basecall of the fastq. Default: 0.05
+  - min_seq_len: minimum sequence length for Basecall of the fastq. Default: 20
+  - offset: Offset for Basecall of the fastq. Default: 33
+  - upstream: region before gene to be loaded into ref_seq
+  - host: Host to connect to. Defaults to grch37.ensembl.or
+  - dataset: Dataset you want to use. To see the different datasets available within a biomaRt you can e.g. do: mart = useMart("ensembl"), followed by listDatasets(mart). Default: hsapiens_gene_ensembl
+  - biomart: BioMart database name you want to connect to. Possible database names can be retrieved with the function listMarts. Default: ensembl
+  - POI: file with list of points of interest
+
+
+
+
+### OUTPUT
+
+The pipeline generates the following output:
+
+  - Histogramm for each mutated position/selected POI
+
+  - .csv with the found mutations for all given files
+
+
+### Example
+#### Testset
+Feel free to test the pipeline with our provided test set which you can find under:
+https://zenodo.org/record/5865470#.YeXufi9XZpQ
+
+First clone the repository to your machine:
+`git clone https://github.com/kaischmid/SangeR.git`
+
+Then run the following command:
+
+`./main.nf `

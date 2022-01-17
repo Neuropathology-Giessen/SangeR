@@ -1,9 +1,7 @@
-
-<p align="left">
-  <img src="sanger_logo.png" alt="SangeR logo"/>
-</p>
+![sangeR](./vignettes/sanger_logo.png "sangeR")
 
 -----
+
 
 Welcome to the git repository of `SangeR`, the program that makes sanger sequencing analysis high-throughput.
 
