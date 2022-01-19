@@ -69,7 +69,7 @@ Hint: `$` assumes a BASH prompt.
 
 Or you start R/Rstudio and enter the following lines:
 ```
-install.packages(c("BiocManager","stringr","ggplot2","reshape2","seqinr","devtools")
+install.packages(c("BiocManager","stringr","ggplot2","reshape2","seqinr","devtools"))
 BiocManager::install(c("Biostrings","CrispRVariants","biomaRt","sangerseqR"))
 library("devtools")
 install_github("https://github.com/kaischmid/SangeR")
@@ -82,9 +82,6 @@ install.packages(c("BiocManager","stringr","ggplot2","reshape2","seqinr","devtoo
 ```
 
 
-### For 
-
-
 ## Docker
 We also provide `SangeR` as [DOCKER image](https://hub.docker.com/r/kaischmid/sange_r). We tested the image on Ubuntu and MacOS. 
 
@@ -94,6 +91,43 @@ docker pull kaischmid/sange_r
 
 
 ## Usage
+
+You can use SangeR in different ways:
+1. shiny
+2. R 
+  In container
+  without 
+4. nextflow
+
+###shiny
+
+The easiest way to get in touch with SangeR is to have a look at the provide shiny app:
+
+It can be found under:
+
+https://gin-sanger.med.uni-giessen.de
+
+or by pulling the Git repository and run the app.R in R/Rstudio
+
+'''R
+shiny::runApp('<dowbload_directory>/SangeR-master/R')
+'''
+
+In the GUI you can now select a .ab1 file from the provide test data: https://zenodo.org/record/5865470#.YeiFfC9XZpQ
+
+The files from the .zip named ab1_with_mutation.zip contain examples with mutation.
+
+Also you can upload the POI file from the git repository you can find under "/data/".
+
+All positions in the POI will be plottet, so that the user can have a look at the chromatogramm.
+
+The need for this function can be recognized by looking at Patient 1. 
+By the default threshold SangeR only can find the silent mutation G105G. By including the POI the user can have a look at 132 position and is able to decied on his own if the signal is too strong.
+
+Also you can download the plot at the bottom of the menu.
+
+### R/Rstudio
+
 
 ### Input data
 
@@ -154,6 +188,12 @@ The pipeline generates the following output:
   - Histogramm for each mutated position/selected POI
 
   - .csv with the found mutations for all given files
+
+
+
+
+
+
 
 
 ### Example

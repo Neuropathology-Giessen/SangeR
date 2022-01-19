@@ -46,3 +46,4 @@ results*
 *.fastq
 container/*
 inst/doc
+.nextflow/*

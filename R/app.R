@@ -16,7 +16,7 @@ ui <- shiny::fluidPage(
     shiny::tabPanel("tool",
 
       # App title
-      shiny::titlePanel(shiny::tags$a(shiny::tags$img(src = "https://github.com/kaischmid/SangeR/raw/master/sanger_logo.png"))),
+      shiny::titlePanel(shiny::tags$a(shiny::tags$img(src = "https://github.com/kaischmid/SangeR/raw/master/data/logo.png"))),
 
       # Sidebar layout with input and output definitions
       shiny::sidebarLayout(
@@ -126,9 +126,13 @@ server <- function(input, output, session) {
   plotInput <- shiny::reactive({
 
     if(!is.null(input$file1)){
-      histograms <- sangeR::plot_hist(sangeR::allign(sangeR::get_ref(sangeR::read.ab1(filename = input$file1$datapath, delimiter = input$delimiter, genename = input$genename, cutoff = input$cutoff, min_seq_len = input$min_seq_len, offset = input$offset),upstream = input$upstream, host = input$host)))
-
+      if(!is.null(input$file2)){
+        histograms <- sangeR::plot_hist(sangeR::allign(sangeR::get_ref(sangeR::read.ab1(filename = input$file1$datapath, delimiter = input$delimiter, genename = input$genename, cutoff = input$cutoff, min_seq_len = input$min_seq_len, offset = input$offset),upstream = input$upstream, host = input$host)), POI = input$file2$datapath)
+      } else {
+        histograms <- sangeR::plot_hist(sangeR::allign(sangeR::get_ref(sangeR::read.ab1(filename = input$file1$datapath, delimiter = input$delimiter, genename = input$genename, cutoff = input$cutoff, min_seq_len = input$min_seq_len, offset = input$offset),upstream = input$upstream, host = input$host)))
+      }
       if(!length(histograms$PNG_list) == 0){
+        print(histograms$tags)
         do.call("grid.arrange", c(histograms$PNG_list, ncol=1))
       } else {stop(paste0("Could not find any mutations. Check in for a POI or less strict parameters."))}
     }

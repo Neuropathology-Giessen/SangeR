@@ -11,6 +11,7 @@
 #'
 
 library(sangeR)
+library(gridExtra)
 
 run_routine <- function(Files, POI){
 
@@ -18,15 +19,16 @@ SangeR <- plot_hist(allign(get_ref(read.ab1(filename = Files))),POI = POI)
 
 ggplot2::ggsave(plot = do.call("grid.arrange", c(SangeR$PNG_list, ncol=1)), paste0(SangeR$Bnummer,".png"), width = 350, height = 300, units='mm')
 
-write.table(file = paste0(SangeR$Bnummer,".csv"), x = SangeR$tags,row.names = FALSE, col.names = FALSE, quote = FALSE, )
+write.table(file = paste0(SangeR$Bnummer,".csv"), x = SangeR$tags,row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
-
-
 
 args = commandArgs(trailingOnly=TRUE)
 
 file = args[1]
 
-run_routine(Files = args[1], POI = args[2])
-
+if (length(args) == 1){
+run_routine(Files = args[1])
+} else {
+  run_routine(Files = args[1], POI = args[2])
+}
